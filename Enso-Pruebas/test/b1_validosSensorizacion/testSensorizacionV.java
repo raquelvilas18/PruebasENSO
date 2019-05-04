@@ -7,16 +7,17 @@ import org.junit.jupiter.api.*;
 
 import elementos.Paciente;
 import subsistemaAlmacenDatos.DatosMedidas;
+import subsistemaAlmacenDatos.Itf1_DatosSimulados;
 import subsistemaGestionPacientes.DatosPacientes;
 
 class testSensorizacionV {
-	DatosMedidas subsistema;
+	Itf1_DatosSimulados subsistema;
 	Paciente pacienteRegistrado;
 	String NSSvalido;
 	String URLvalida;
 	@BeforeEach
 	void inicio() {
-		subsistema = new DatosMedidas(new DatosPacientes());
+		subsistema = (Itf1_DatosSimulados) new DatosMedidas(new DatosPacientes());
 		NSSvalido = "281234567840";
 		URLvalida = "ficheros/"+NSSvalido+"/medidas.csv";
 		pacienteRegistrado = new Paciente(NSSvalido, "Santiago de chile5", "Juan Rodriguez Alvarez", "28-07-1998");
@@ -34,7 +35,14 @@ class testSensorizacionV {
 	@DisplayName("CP_00001: Leer datos del paciente con parametros validos")
 	void testLeerDatosPacientes_001() {
 		String respuesta = subsistema.leerDatos(URLvalida, new ArrayList<>());
-		assertEquals(NSSvalido, respuesta, "Leer datos del paciente no devuelve el NSS correcto");
+		assertEquals(NSSvalido, respuesta, "Devuelve " + respuesta + " en lugar de "+ NSSvalido);
+	}
+	
+	@Test
+	@DisplayName("CP_00005: Enviar datos de los sensores validos")
+	void testEnviarDatos_005() {
+		Boolean respuesta = subsistema.enviarDatos( new ArrayList<>(), NSSvalido);
+		assertTrue(respuesta);
 	}
 
 }

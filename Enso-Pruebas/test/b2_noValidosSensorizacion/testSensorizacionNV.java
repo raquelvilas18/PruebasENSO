@@ -12,19 +12,20 @@ import org.junit.jupiter.api.Test;
 
 import elementos.Paciente;
 import subsistemaAlmacenDatos.DatosMedidas;
+import subsistemaAlmacenDatos.Itf1_DatosSimulados;
 import subsistemaGestionPacientes.DatosPacientes;
 
 class testSensorizacionNV {
 
-	DatosMedidas subsistema;
+	Itf1_DatosSimulados subsistema;
 	Paciente pacienteRegistrado;
 	String NSSvalido;
 	String URLvalida;
 	@BeforeEach
 	void inicio() {
-		subsistema = new DatosMedidas(new DatosPacientes());
-		NSSvalido = "0000000000";
-		URLvalida = "ficheros/000000000/medidas.csv";
+		subsistema = (Itf1_DatosSimulados)new DatosMedidas(new DatosPacientes());
+		NSSvalido = "281234567840";
+		URLvalida = "ficheros/"+NSSvalido+"/medidas.csv";
 		pacienteRegistrado = new Paciente(NSSvalido, "Santiago de chile5", "Juan Rodriguez Alvarez", "28-07-1998");
 		DatosPacientes subsistemaPacientes= new DatosPacientes();
 		subsistemaPacientes.darAlta(pacienteRegistrado);
@@ -56,6 +57,28 @@ class testSensorizacionNV {
 		String resultado = subsistema.leerDatos("ficheros//medidas.csv", null);
 		assertNull(resultado);
 	}
+	
+	@Test
+	@DisplayName("CP_00006: Enviar datos de los sensores con arrayList no valido")
+	void testenviarDatos_006() {
+		Boolean respuesta = subsistema.enviarDatos( null, NSSvalido);
+		assertFalse(respuesta);
+	}
+	
+	@Test
+	@DisplayName("CP_00007: Enviar datos de los sensores con arrayList no valido y NSS no valido")
+	void testenviarDatos_007() {
+		Boolean respuesta = subsistema.enviarDatos( null, null);
+		assertFalse(respuesta);
+	}
 
+	@Test
+	@DisplayName("CP_00008: Enviar datos de los sensores con  NSS no valido")
+	void testenviarDatos_008() {
+		Boolean respuesta = subsistema.enviarDatos( new ArrayList<>(), "12123456700");
+		assertFalse(respuesta);
+	}
+	
+	
 
 }

@@ -34,5 +34,12 @@ public class Alarma {
 	public void setValor(Float valor) {
 		this.valor = valor;
 	}
+	
+	@Override
+	public boolean equals(Object alarma) {
+		if(alarma == null)return false;
+		Alarma otra = (Alarma) alarma;
+		return (otra.getFecha().equals(this.fecha) && otra.getTipo().equals(this.tipo) && otra.getValor().equals(this.valor));
+	}
 }
 
