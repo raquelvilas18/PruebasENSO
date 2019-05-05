@@ -2,6 +2,7 @@ package b7_validosPacientes;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -27,7 +28,7 @@ class testPacientesV {
 	
 	@AfterEach
 	void restaurar() {
-		
+		subsistema.eliminar(pacienteRegistrado);
 	}
 	
 	
@@ -42,13 +43,18 @@ class testPacientesV {
 
 	
 	@Test
-	@DisplayName("CP_00040: Actualizar paciente con parametros validos (SOLO VALIDO SI CP_00037 pasa)")
+	@DisplayName("CP_00040: Actualizar paciente con nueva direccion")
 	void testActualizarPaciente_040() {
+		//Dar de alta por si no estaba el paciente
+		pacienteRegistrado = new Paciente(NSSvalido,"Ourense", "Miguel Martinez", "12-03-1994");
+		subsistema.darAlta(pacienteRegistrado);
+		
+		
 		pacienteRegistrado.setDireccion("Palmeira");
 		Boolean resultado = subsistema.actualizar(pacienteRegistrado);
-		assertTrue(resultado);
 		Paciente pacienteActualizado = subsistema.consultarDatosPaciente(pacienteRegistrado.getnSeguridadSocial());
-		assertEquals(pacienteRegistrado, pacienteActualizado);
+		assertTrue(resultado); //El metodo devuelve true porque lo actualizo con exito
+		assertEquals(pacienteRegistrado, pacienteActualizado); //El paciente recuperado de la BD esta actualizado correctamente
 	}
 	
 	@Test
@@ -62,6 +68,65 @@ class testPacientesV {
 	@Disabled
 	@DisplayName("CP_00046: Generar alarma con medida null")
 	void testenviarDatos_046() {
-
 	}
+	
+	
+	@Test
+	@DisplayName("CP_00057: Actualizar paciente con nuevo nombre")
+	void testActualizarPaciente_057() {
+		//Dar de alta por si no estaba el paciente
+		pacienteRegistrado = new Paciente(NSSvalido,"Ourense", "Miguel Martinez", "12-03-1994");
+		subsistema.darAlta(pacienteRegistrado);
+		
+		
+		pacienteRegistrado.setDireccion("Palmeira");
+		Boolean resultado = subsistema.actualizar(pacienteRegistrado);
+		Paciente pacienteActualizado = subsistema.consultarDatosPaciente(pacienteRegistrado.getnSeguridadSocial());
+		assertTrue(resultado); //El metodo devuelve true porque lo actualizo con exito
+		assertEquals(pacienteRegistrado, pacienteActualizado); //El paciente recuperado de la BD esta actualizado correctamente
+	}
+	
+	@Test
+	@DisplayName("CP_00058: Actualizar paciente con nueva fecha nacimiento")
+	void testActualizarPaciente_058() {
+		//Dar de alta por si no estaba el paciente
+		pacienteRegistrado = new Paciente(NSSvalido,"Ourense", "Miguel Martinez", "12-03-1994");
+		subsistema.darAlta(pacienteRegistrado);
+		
+		pacienteRegistrado.setFechaNacimiento("12-03-1992");
+		Boolean resultado = subsistema.actualizar(pacienteRegistrado);
+		Paciente pacienteActualizado = subsistema.consultarDatosPaciente(pacienteRegistrado.getnSeguridadSocial());
+		assertTrue(resultado); //El metodo devuelve true porque lo actualizo con exito
+		assertEquals(pacienteRegistrado, pacienteActualizado); //El paciente recuperado de la BD esta actualizado correctamente
+	}
+	
+	@Test
+	@DisplayName("CP_00059: Actualizar paciente con nuevo nombre")
+	void testActualizarPaciente_059() {
+		//Dar de alta por si no estaba el paciente
+		pacienteRegistrado = new Paciente(NSSvalido,"Ourense", "Miguel Martinez", "12-03-1994");
+		subsistema.darAlta(pacienteRegistrado);
+		
+		
+		pacienteRegistrado.setNombreAp("Miguel Muras");
+		Boolean resultado = subsistema.actualizar(pacienteRegistrado);
+		Paciente pacienteActualizado = subsistema.consultarDatosPaciente(pacienteRegistrado.getnSeguridadSocial());
+		assertTrue(resultado); //El metodo devuelve true porque lo actualizo con exito
+		assertEquals(pacienteRegistrado, pacienteActualizado); //El paciente recuperado de la BD esta actualizado correctamente
+	}
+	
+	@Test
+	@DisplayName("CP_00060: Actualizar paciente al que no le ha cambiado nada")
+	void testActualizarPaciente_060() {
+		//Dar de alta por si no estaba el paciente
+		pacienteRegistrado = new Paciente(NSSvalido,"Ourense", "Miguel Martinez", "12-03-1994");
+		subsistema.darAlta(pacienteRegistrado);
+		
+		Boolean resultado = subsistema.actualizar(pacienteRegistrado);
+		Paciente pacienteActualizado = subsistema.consultarDatosPaciente(pacienteRegistrado.getnSeguridadSocial());
+		assertTrue(resultado); //El metodo devuelve true porque lo actualizo con exito
+		assertEquals(pacienteRegistrado, pacienteActualizado); //El paciente recuperado de la BD esta actualizado correctamente
+	}
+	
+
 }

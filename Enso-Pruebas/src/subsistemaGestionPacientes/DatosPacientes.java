@@ -79,7 +79,7 @@ public class DatosPacientes implements Itf6_DatosPacientes {
 		String nss = paciente.getnSeguridadSocial();
 		pacientes.replace(nss, pacientes.get(nss), paciente);
 		guardarDatosFicheroPacientes();
-		return false;
+		return true;
 	}
 
 	@Override
