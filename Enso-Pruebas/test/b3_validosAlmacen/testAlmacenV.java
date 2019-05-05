@@ -51,9 +51,7 @@ class testAlmacenV {
 		Medida medida = new Medida(temp, frec, "12-03-2019");
 		Alarma alarmaEsperada = new Alarma("12-03-2019", "T", temp);
 		Alarma respuesta = subsistema.generarAlarma(medida, pacienteRegistrado);
-		assertSame(respuesta.getFecha(), alarmaEsperada.getFecha());
-		assertSame(respuesta.getTipo(), alarmaEsperada.getTipo());
-		assertSame(respuesta.getValor(), alarmaEsperada.getValor());
+		assertEquals(respuesta, alarmaEsperada);
 	}
 	
 	@Test
@@ -64,9 +62,7 @@ class testAlmacenV {
 		Medida medida = new Medida(temp, frec, "12-03-2019");
 		Alarma alarmaEsperada = new Alarma("12-03-2019", "T", temp);
 		Alarma respuesta = subsistema.generarAlarma(medida, pacienteRegistrado);
-		assertSame(respuesta.getFecha(), alarmaEsperada.getFecha());
-		assertSame(respuesta.getTipo(), alarmaEsperada.getTipo());
-		assertSame(respuesta.getValor(), alarmaEsperada.getValor());
+		assertEquals(respuesta, alarmaEsperada);
 	}
 	
 	@Test
@@ -77,9 +73,7 @@ class testAlmacenV {
 		Medida medida = new Medida(temp, frec, "12-03-2019");
 		Alarma alarmaEsperada = new Alarma("12-03-2019", "F", frec);
 		Alarma respuesta = subsistema.generarAlarma(medida, pacienteRegistrado);
-		assertSame(respuesta.getFecha(), alarmaEsperada.getFecha());
-		assertSame(respuesta.getTipo(), alarmaEsperada.getTipo());
-		assertSame(respuesta.getValor(), alarmaEsperada.getValor());
+		assertEquals(respuesta, alarmaEsperada);
 	}
 
 	@Test
@@ -90,9 +84,7 @@ class testAlmacenV {
 		Medida medida = new Medida(temp, frec, "12-03-2019");
 		Alarma alarmaEsperada = new Alarma("12-03-2019", "F", frec);
 		Alarma respuesta = subsistema.generarAlarma(medida, pacienteRegistrado);
-		assertSame(respuesta.getFecha(), alarmaEsperada.getFecha());
-		assertSame(respuesta.getTipo(), alarmaEsperada.getTipo());
-		assertSame(respuesta.getValor(), alarmaEsperada.getValor());
+		assertEquals(respuesta, alarmaEsperada);
 	}
 	
 	@Test
@@ -103,9 +95,7 @@ class testAlmacenV {
 		Medida medida = new Medida(temp, frec, "12-03-2019");
 		Alarma alarmaEsperada = new Alarma("12-03-2019", "T", temp);
 		Alarma respuesta = subsistema.generarAlarma(medida, pacienteRegistrado);
-		assertSame(respuesta.getFecha(), alarmaEsperada.getFecha());
-		assertSame(respuesta.getTipo(), alarmaEsperada.getTipo());
-		assertSame(respuesta.getValor(), alarmaEsperada.getValor());
+		assertEquals(respuesta, alarmaEsperada);
 	}
 	
 	@Test
@@ -116,9 +106,7 @@ class testAlmacenV {
 		Medida medida = new Medida(temp, frec, "12-03-2019");
 		Alarma alarmaEsperada = new Alarma("12-03-2019", "T", temp);
 		Alarma respuesta = subsistema.generarAlarma(medida, pacienteRegistrado);
-		assertSame(respuesta.getFecha(), alarmaEsperada.getFecha());
-		assertSame(respuesta.getTipo(), alarmaEsperada.getTipo());
-		assertSame(respuesta.getValor(), alarmaEsperada.getValor());
+		assertEquals(respuesta, alarmaEsperada);
 	}
 	
 	@Test
@@ -129,9 +117,7 @@ class testAlmacenV {
 		Medida medida = new Medida(temp, frec, "12-03-2019");
 		Alarma alarmaEsperada = new Alarma("12-03-2019", "F", frec);
 		Alarma respuesta = subsistema.generarAlarma(medida, pacienteRegistrado);
-		assertSame(respuesta.getFecha(), alarmaEsperada.getFecha());
-		assertSame(respuesta.getTipo(), alarmaEsperada.getTipo());
-		assertSame(respuesta.getValor(), alarmaEsperada.getValor());
+		assertEquals(respuesta, alarmaEsperada);
 	}
 	
 	@Test
@@ -144,11 +130,11 @@ class testAlmacenV {
 		Paciente pacientePrueba = new Paciente("1234567899", "OurenseGalicia", "Maria Mar Alvarez", "01-01-1964");
 
 		Alarma respuesta = subsistema.generarAlarma(medida, pacientePrueba);
-		assertSame(respuesta.getFecha(), alarmaEsperada.getFecha());
-		assertSame(respuesta.getTipo(), alarmaEsperada.getTipo());
-		assertSame(respuesta.getValor(), alarmaEsperada.getValor());
+		assertEquals(respuesta, alarmaEsperada);
 	}
 	
+	
+	//ESTE ESTA MAL HECHO---> todo: rehacer
 	@Test
 	@DisplayName("CP_00018: Generar estadistico valido, con paciente registrado")
 	void testGenerarEstadistico_017() {

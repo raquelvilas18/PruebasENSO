@@ -93,4 +93,13 @@ public class Paciente {
 	public void setMedidas(ArrayList<Medida> medidas) {
 		this.medidas = medidas;
 	}
+	
+	@Override
+	public boolean equals(Object otro) {
+		if(otro==null) {
+			return false;
+		}
+		Paciente otroP = (Paciente) otro;
+		return (otroP.getDireccion().equals(this.direccion) && otroP.getFechaNacimiento().equals(this.fechaNacimiento) && otroP.getNombreAp().contentEquals(this.nombreAp) && otroP.getnSeguridadSocial().equals(this.nSeguridadSocial));
+	}
 }
