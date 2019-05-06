@@ -133,6 +133,21 @@ class testAlmacenV {
 		assertEquals(respuesta, alarmaEsperada);
 	}
 	
+	@Test
+	@DisplayName("CP_00063: Generar alarma por frecuencia y temperatura simultaneamente")
+	void testgenerarAlarma_063() {
+		Float temp = (float) 40.5;
+		Float frec = (float)47;
+		Medida medida = new Medida(temp, frec, "12-03-2019");
+		Alarma alarmaEsperada = new Alarma("12-03-2019", "F", frec);
+		Alarma alarmaEsperada2 = new Alarma("12-03-2019", "T", temp);
+		Paciente pacientePrueba = new Paciente("1234567899", "OurenseGalicia", "Maria Mar Alvarez", "01-01-1964");
+
+		Alarma respuesta = subsistema.generarAlarma(medida, pacientePrueba);
+		assertEquals(respuesta, alarmaEsperada, "Solo genera la alarma de frecuencia");
+		assertEquals(respuesta, alarmaEsperada2, "Solo genera la alarma de temperatura");
+	}
+	
 	
 	//ESTE ESTA MAL HECHO---> todo: rehacer
 	@Test
