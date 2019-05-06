@@ -150,17 +150,39 @@ public class DatosMedidas implements Itf1_DatosSimulados, Itf3_SeriesTemporales 
 	@Override
 	public ArrayList<Medida> solicitarMedidas(Paciente paciente, String fechaInicio) {
 		Paciente aux = this.itfDatosPacientes.consultarDatosPaciente(paciente.getnSeguridadSocial());
-		ArrayList<Medida> medidas = new ArrayList();
+/*1*/	ArrayList<Medida> medidas = new ArrayList();
 		try {
-			this.comprobarFechas(fechaInicio);//comprobamos posibles errores
+
 			String partesFechaInicio[] = fechaInicio.split(";");
-			String camposFechaInicio[] = partesFechaInicio[0].split("-");
-			String camposHoraInicio[] = partesFechaInicio[1].split(":");
-			@SuppressWarnings("deprecation")
-			Date fechaIni = new Date(Integer.parseInt(camposFechaInicio[2]),Integer.parseInt(camposFechaInicio[1]),
+/*2*/		if(partesFechaInicio.length<2){
+/*3*/			throw new ExcepcionDeFechas("Error de formato");
+			}
+/*4*/		String camposFechaInicio[] = partesFechaInicio[0].split("-");
+		
+/*5*/		if(camposFechaInicio.length < 3) {
+/*6*/			throw new ExcepcionDeFechas("Error de formato");
+			}
+			
+/*7*/		String camposHoraInicio[] = partesFechaInicio[1].split(":");
+			
+/*8*/		if(camposHoraInicio.length < 2) {
+/*9*/			throw new ExcepcionDeFechas("Error de formato");
+			}
+			//comprobamos que la fecha sea posterior a la actual
+/*10*/		Date fechaActual = new Date();
+			
+			Date fechaIni = new Date(Integer.parseInt(camposFechaInicio[2])-1900,Integer.parseInt(camposFechaInicio[1])-1,
+					Integer.parseInt(camposFechaInicio[0].trim()),Integer.parseInt(camposHoraInicio[0]),
+					Integer.parseInt(camposHoraInicio[1]));
+			
+/*11*/		if(fechaIni.after(fechaActual)) {
+/*12*/			throw new ExcepcionDeFechas("Fecha posterior a la actual");
+			}
+					
+/*13*/		fechaIni = new Date(Integer.parseInt(camposFechaInicio[2]),Integer.parseInt(camposFechaInicio[1]),
 					Integer.parseInt(camposFechaInicio[0]),Integer.parseInt(camposHoraInicio[0]),
 					Integer.parseInt(camposHoraInicio[1]));
-			for(int i=0; i<aux.getMedidas().size(); i++) {//
+/*14*/		for(int i=0; i<aux.getMedidas().size(); i++) {
 				Medida med = aux.getMedidas().get(i);
 				String campos[] = med.getFecha().split(";");
 				String camposFecha[] = campos[0].split("-");
@@ -170,11 +192,11 @@ public class DatosMedidas implements Itf1_DatosSimulados, Itf3_SeriesTemporales 
 						Integer.parseInt(camposFecha[0]),Integer.parseInt(camposHora[0]),
 						Integer.parseInt(camposHora[1]));
 				
-				if(fecha.after(fechaIni)) {
-					medidas.add(med);
+/*15*/			if(fecha.after(fechaIni)) {
+/*16*/				medidas.add(med);
 				}
 
-			}
+/*17*/		}
 		} catch(ExcepcionDeFechas e) {
 			System.out.println(e);
 		}
