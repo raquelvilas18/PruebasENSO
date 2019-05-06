@@ -1,5 +1,7 @@
 
 Casos de prueba hechos
+- : hecho
+> : por hacer
 
 -CP_0001 (Raquel)
 -CP_0002 (Raquel)
@@ -17,7 +19,7 @@ Casos de prueba hechos
 -CP_0014 (Raquel)
 -CP_0015 (Raquel)
 -CP_0016 (Raquel)
--CP_0017---> Hay que hacerlo sobre paciente con medidas almacenadas
+>CP_0017: hay que hacerlo sobre paciente con medidas almacenadas
 -CP_0037 (Raquel)
 -CP_0038 (Raquel)
 -CP_0040 (Raquel)
