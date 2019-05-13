@@ -2,12 +2,15 @@ package b3_validosAlmacen;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import elementos.Alarma;
@@ -160,5 +163,31 @@ class testAlmacenV {
 			System.out.println(dato +"----" + respuesta.getDatos().get(dato));
 		}
 		//assertNull(respuesta);
+	}
+	
+	
+	@Tag("Tiempo")
+	@Nested
+	@DisplayName("Pruebas de Rendimiento")
+	class Detiempo {
+		@Test
+		@DisplayName("Caso de prueba de rendimiento: generar alarma en menos de 200ms")
+		void testTiempoEnvioAlertasT() {
+			Float temp = (float) 40.5;
+			Float frec = (float)147;
+			Medida medida = new Medida(temp, frec, "12-03-2019");
+			Paciente pacientePrueba = new Paciente("1234567899", "OurenseGalicia", "Maria Mar Alvarez", "01-01-1964");
+			assertTimeout(Duration.ofMillis(200), ()->{subsistema.generarAlarma(medida, pacientePrueba);});
+		}
+		
+		@Test
+		@DisplayName("Caso de prueba de rendimiento: generar alarma en menos de 200ms")
+		void testTiempoEnvioAlertasF() {
+			Float temp = (float) 36.5;
+			Float frec = (float)47;
+			Medida medida = new Medida(temp, frec, "12-03-2019");
+			Paciente pacientePrueba = new Paciente("1234567899", "OurenseGalicia", "Maria Mar Alvarez", "01-01-1964");
+			assertTimeout(Duration.ofMillis(200), ()->{subsistema.generarAlarma(medida, pacientePrueba);});
+		}
 	}
 }
