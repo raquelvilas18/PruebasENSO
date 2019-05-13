@@ -15,10 +15,14 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import elementos.Estadistico;
+import elementos.Medida;
 import elementos.Paciente;
 import opera.Arit;
+import subsistemaAlmacenDatos.DatosMedidas;
 import subsistemaAlmacenDatos.ExcepcionDeFechas;
+import subsistemaAlmacenDatos.Itf3_SeriesTemporales;
 import subsistemaAnalisis.DatosAnalisis;
+import subsistemaAnalisis.Itf2_DatosInstantaneos;
 import subsistemaAnalisis.Itf4_Estadisticas;
 import subsistemaGestionPacientes.DatosPacientes;
 import subsistemaGestionPacientes.Itf6_DatosPacientes;
@@ -27,6 +31,7 @@ class testAnalisisCB {
 
 	
 	Itf4_Estadisticas subsistema;
+	Itf3_SeriesTemporales subsistema2;
 	DatosAnalisis subsistemaAnalisis;
 	DatosPacientes subPacientes;
 	String NSSvalido;
@@ -39,6 +44,7 @@ class testAnalisisCB {
 		
 		subPacientes = new DatosPacientes();
 		subsistema = (Itf4_Estadisticas)new DatosAnalisis(subPacientes);
+		subsistema2 = new DatosMedidas(subPacientes);
 		NSSvalido = "281234567840";
 		URLvalida = "ficheros/"+NSSvalido+"/medidas.csv";
 		pacienteRegistrado = new Paciente(NSSvalido, "Santiago de chile5", "Juan Rodriguez Alvarez", "28-07-1998");
@@ -87,6 +93,40 @@ class testAnalisisCB {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	
+	@Test
+	@DisplayName("CB_XX: comprobar camino 1-2-3-FIN que debería devolver un array vacio, error en la fecha")
+	void testsolicitarMedidas_XX() {
+		String fechaInicio="22-02-2019;";
+		Paciente pac = new Paciente("123456781221","Ourense", "Miguel Martínez", "12-03-1994");
+		subPacientes.darAlta(pac);
+		ArrayList<Medida> aux = subsistema2.solicitarMedidas(pac, fechaInicio);
+		assertTrue(aux.isEmpty());
+		subPacientes.eliminar(pac);
+	}
+	
+	@Test
+	@DisplayName("CB_XX: comprobar camino 1-2-4-5-7-8-10-11-13-14-FIN que debería devolver un array vacio, no hay medidas")
+	void testsolicitarMedidas_XXX() {
+		String fechaInicio="22-02-2019;11:11";
+		Paciente pac = new Paciente("123456781221","Ourense", "Miguel Martínez", "12-03-1994");
+		subPacientes.darAlta(pac);
+		ArrayList<Medida> aux = subsistema2.solicitarMedidas(pac, fechaInicio);
+		assertTrue(aux.isEmpty());
+		subPacientes.eliminar(pac);
+	}
+	
+	@Test
+	@DisplayName("CB_XX: comprobar camino 1-2-4-5-7-8-10-11-12-FIN que debería devolver un array vacio, fecha posterior a la actual")
+	void testsolicitarMedidas_XXXX() {
+		String fechaInicio="22-02-2029;11:11";
+		Paciente pac = new Paciente("123456781221","Ourense", "Miguel Martínez", "12-03-1994");
+		subPacientes.darAlta(pac);
+		ArrayList<Medida> aux = subsistema2.solicitarMedidas(pac, fechaInicio);
+		assertTrue(aux.isEmpty());
+		subPacientes.eliminar(pac);
 	}
 
 }
