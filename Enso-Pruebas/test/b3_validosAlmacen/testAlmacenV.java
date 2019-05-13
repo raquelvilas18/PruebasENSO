@@ -190,4 +190,18 @@ class testAlmacenV {
 			assertTimeout(Duration.ofMillis(200), ()->{subsistema.generarAlarma(medida, pacientePrueba);});
 		}
 	}
+	
+	@Test
+	@DisplayName("CP_00056: Generar alarma por frecuencia justo superior al limite")
+	void testSolicitarMedidasEntreDosFechas_019() {
+		Float temp = (float) 36.5;
+		Float frec = (float)132.5;
+		Medida medida = new Medida(temp, frec, "12-03-2019");
+		Alarma alarmaEsperada = new Alarma("12-03-2019", "F", frec);
+		Paciente pacientePrueba = new Paciente("1234567899", "OurenseGalicia", "Maria Mar Alvarez", "01-01-1964");
+
+		Alarma respuesta = subsistema.generarAlarma(medida, pacientePrueba);
+		assertEquals(respuesta, alarmaEsperada);
+	}
+	
 }
