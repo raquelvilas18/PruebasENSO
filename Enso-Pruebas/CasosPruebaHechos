@@ -19,8 +19,8 @@ Casos de prueba hechos
 -CP_0014 (Raquel)
 -CP_0015 (Raquel)
 -CP_0016 (Raquel)
->CP_0017: hay que hacerlo sobre paciente con medidas almacenadas
--CP_0018
+-CP_0017 (Juan)
+>CP_0018 (Luis)
 -CP_0019 (Luis)
 -CP_0020 (Luis)
 -CP_0021 (Luis)
@@ -64,6 +64,7 @@ Casos de prueba hechos
 -CP_0059 (Raquel)
 -CP_0060 (Raquel)
 -CP_0061 (Raquel)
+>CP_0062 (Luis)
 -CP_0063 (Raquel)
 -CP_0064 (Juan)
 -CP_0065 (Juan)
