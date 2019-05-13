@@ -2,8 +2,10 @@ package b3_validosAlmacen;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import org.junit.jupiter.api.AfterEach;
@@ -159,8 +161,9 @@ class testAlmacenV {
 	@DisplayName("CP_00018: Generar estadistico valido, con paciente registrado")
 	void testGenerarEstadistico_018() {
 		ArrayList<Medida> medidas = new ArrayList<>();
-		medidas.add(new Medida(36.2f, 80.0f, "30-2-2019;12:34:56"));
-		medidas.add(new Medida(36.4f, 85.0f, "30-2-2019;12:39:28"));
+		Date fechaActual = new Date();
+		String fecha = new SimpleDateFormat("dd-MM-yyyy;kk:mm:ss").format(fechaActual);
+		medidas.add(new Medida(36.4f, 85.0f, fecha));
 		pacienteRegistrado.setMedidas(medidas);
 		Estadistico respuesta = subsistema.generarEstadistico(pacienteRegistrado);
 		
