@@ -101,5 +101,13 @@ class testPacientesV2 {
 		assertEquals(pacienteRegistrado, pacienteActualizado); //El paciente recuperado de la BD esta actualizado correctamente
 	}
 	
+	@Test
+	@DisplayName("CP_00061: dar alta paciente recien eliminado")
+	void testAltaPaciente_061() {
+		subsistema.eliminar(pacienteRegistrado);
+		Paciente pacienteRegistrar  = new Paciente(NSSvalido,"Ourense", "Miguel Martinez", "12-03-1994");
+		Boolean resultado = subsistema.darAlta(pacienteRegistrar); 
+		assertTrue(resultado); 
+	}
 
 }

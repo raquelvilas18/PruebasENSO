@@ -28,6 +28,11 @@ public class Estadistico {
 		this.fecha = fecha;
 	}
 	
-	
+	@Override
+	public boolean equals(Object otro) {
+		if(otro == null)return false;
+		Estadistico otroE = (Estadistico) otro;
+		return (otroE.datos.equals(this.datos) && otroE.fecha.equals(this.fecha));
+	}
 	
 }
