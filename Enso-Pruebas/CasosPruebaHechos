@@ -4,10 +4,12 @@ CASOS DE PRUEBA HECHOS
 
 ------------------------------
 
-Todos hechos del 1 al 65
+CAJA NEGRA: todos hechos (del 1 al 65)
+CAJA BLANCA: 1 de 4 métodos hechos
 
 ------------------------------
 
+CAJA NEGRA
 -CP_0001 (Raquel)
 -CP_0002 (Raquel)
 -CP_0003 (Raquel)
@@ -73,3 +75,11 @@ Todos hechos del 1 al 65
 -CP_0063 (Raquel)
 -CP_0064 (Juan)
 -CP_0065 (Juan)
+
+------------------------------
+
+CAJA BLANCA
+>solicitarEstadisticos (Raquel)
+>generarAlarmas (Miguel)
+-generarEstadistico (Luis)
+>solicitarMedidas (Juan)
