@@ -80,5 +80,25 @@ class testAnalisisNV {
 		respuesta = subsistema2.verAlarmas(pacienteNoRegistrado);
 		assertNull(respuesta);
 	}
+	
+	@Test
+	@DisplayName("CP_00064: Solicitar Estadistico")
+	void solicitarEstadistico_64() {
+		ArrayList<Estadistico> respuesta = null;
+		String fechaInicio = "30-2-2019;15:15:15";
+		String fechaFin = "23-15-2019;15:75:99";
+		respuesta = subsistema.solicitarEstadisticos(pacienteRegistrado, fechaInicio, fechaFin);
+		assertNull(respuesta);
+	}
+	
+	@Test
+	@DisplayName("CP_00065: Solicitar Estadistico")
+	void solicitarEstadistico_65() {
+		ArrayList<Estadistico> respuesta = null;
+		String fechaInicio = "30-2-2019;15:15:15";
+		String fechaFin = "23-15-2019;15-75-99";
+		respuesta = subsistema.solicitarEstadisticos(pacienteRegistrado, fechaInicio, fechaFin);
+		assertNull(respuesta);
+	}
 
 }
