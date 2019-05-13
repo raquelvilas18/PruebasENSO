@@ -18,7 +18,7 @@ import elementos.Estadistico;
 import elementos.Medida;
 import elementos.Paciente;
 import subsistemaAlmacenDatos.DatosMedidas;
-import subsistemaAlmacenDatos.Itf1_DatosSimulados;
+import subsistemaAlmacenDatos.Itf3_SeriesTemporales;
 import subsistemaAnalisis.DatosAnalisis;
 import subsistemaAnalisis.Itf2_DatosInstantaneos;
 import subsistemaGestionPacientes.DatosPacientes;
@@ -27,12 +27,15 @@ import subsistemaSensorizacion.DatosSensores;
 class testAlmacenV {
 
 	Itf2_DatosInstantaneos subsistema;
+	Itf3_SeriesTemporales almacen;
 	Paciente pacienteRegistrado;
 	String NSSvalido;
 	String URLvalida;
+	
 	@BeforeEach
 	void inicio() {
 		subsistema = (Itf2_DatosInstantaneos)new DatosAnalisis(new DatosPacientes());
+		almacen = (Itf3_SeriesTemporales) new DatosMedidas(new DatosPacientes());
 		NSSvalido = "281234567840";
 		URLvalida = "ficheros/"+NSSvalido+"/medidas.csv";
 		pacienteRegistrado = new Paciente(NSSvalido, "Santiago de chile5", "Juan Rodriguez Alvarez", "28-07-1998");
@@ -192,16 +195,18 @@ class testAlmacenV {
 	}
 	
 	@Test
-	@DisplayName("CP_00056: Generar alarma por frecuencia justo superior al limite")
+	@DisplayName("CP_00019: Solicitar medidas entre dos fechas")
 	void testSolicitarMedidasEntreDosFechas_019() {
-		Float temp = (float) 36.5;
-		Float frec = (float)132.5;
-		Medida medida = new Medida(temp, frec, "12-03-2019");
-		Alarma alarmaEsperada = new Alarma("12-03-2019", "F", frec);
-		Paciente pacientePrueba = new Paciente("1234567899", "OurenseGalicia", "Maria Mar Alvarez", "01-01-1964");
-
-		Alarma respuesta = subsistema.generarAlarma(medida, pacientePrueba);
-		assertEquals(respuesta, alarmaEsperada);
+		String fechaInicio = "30-2-2019";
+		String fechaFin = "30-3-2019";
+		assertNotNull(almacen.solicitarMedidas(pacienteRegistrado, fechaInicio, fechaFin));
+	}
+	
+	@Test
+	@DisplayName("CP_00027: Solicitar medidas desde una fecha")
+	void testSolicitarMedidasDesdeUnaFecha_027() {
+		String fechaInicio = "30-2-2019";
+		assertNotNull(almacen.solicitarMedidas(pacienteRegistrado, fechaInicio));
 	}
 	
 }
