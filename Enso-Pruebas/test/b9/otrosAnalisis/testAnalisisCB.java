@@ -25,6 +25,7 @@ import subsistemaGestionPacientes.Itf6_DatosPacientes;
 
 class testAnalisisCB {
 
+	
 	Itf4_Estadisticas subsistema;
 	DatosAnalisis subsistemaAnalisis;
 	DatosPacientes subPacientes;
@@ -32,6 +33,7 @@ class testAnalisisCB {
 	String URLvalida;
 	Paciente pacienteRegistrado;
 	
+	//HOLIWIIWIW
 	@BeforeEach
 	void inicio() {
 		
