@@ -209,5 +209,15 @@ class testAlmacenNV {
 		Paciente pacienteNuncaRegistrado = pacienteRegistrado = new Paciente("581234537840", "Santiago de Compostela", "Mario Rodriguez Alvarez", "27-06-1978");
 		assertNull(almacen.solicitarMedidas(pacienteNuncaRegistrado, fechaInicio));
 	}
+	
+	@Test
+	@DisplayName("CP_00062: Generar estadístico con paciente sin medidas")
+	void testGenerarEstadistico_062() {
+		pacienteRegistrado.setMedidas(new ArrayList<>());
+		Estadistico respuesta = subsistema.generarEstadistico(pacienteRegistrado);
+		
+		// Debe ser nulo porque el paciente no tiene medidas, por lo tanto no se instancia el Estadistico
+		assertNull(respuesta);
+	}
 
 }

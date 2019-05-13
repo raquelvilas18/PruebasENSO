@@ -155,17 +155,17 @@ class testAlmacenV {
 	}
 	
 	
-	//ESTE ESTA MAL HECHO---> todo: rehacer
 	@Test
 	@DisplayName("CP_00018: Generar estadistico valido, con paciente registrado")
-	void testGenerarEstadistico_017() {
-		DatosSensores generador = new DatosSensores();
-		generador.simularDatosSensores(2, pacienteRegistrado.getnSeguridadSocial());
-		Estadistico respuesta = subsistema.generarEstadistico( pacienteRegistrado);
-		for(String dato :respuesta.getDatos().keySet()) {
-			System.out.println(dato +"----" + respuesta.getDatos().get(dato));
-		}
-		//assertNull(respuesta);
+	void testGenerarEstadistico_018() {
+		ArrayList<Medida> medidas = new ArrayList<>();
+		medidas.add(new Medida(36.2f, 80.0f, "30-2-2019;12:34:56"));
+		medidas.add(new Medida(36.4f, 85.0f, "30-2-2019;12:39:28"));
+		pacienteRegistrado.setMedidas(medidas);
+		Estadistico respuesta = subsistema.generarEstadistico(pacienteRegistrado);
+		
+		// Si no es nulo, significa que hay medidas y que se ha instanciado un Estadistico
+		assertNotNull(respuesta);
 	}
 	
 	
