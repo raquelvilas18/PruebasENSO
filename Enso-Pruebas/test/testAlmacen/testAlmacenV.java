@@ -1,4 +1,4 @@
-package b3_validosAlmacen;
+package testAlmacen;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -8,6 +8,7 @@ import java.util.HashMap;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Tag;
@@ -153,6 +154,7 @@ class testAlmacenV {
 	
 	
 	//ESTE ESTA MAL HECHO---> todo: rehacer
+	@Disabled
 	@Test
 	@DisplayName("CP_00018: Generar estadistico valido, con paciente registrado")
 	void testGenerarEstadistico_017() {
@@ -171,7 +173,7 @@ class testAlmacenV {
 	@DisplayName("Pruebas de Rendimiento")
 	class Detiempo {
 		@Test
-		@DisplayName("Caso de prueba de rendimiento: generar alarma en menos de 200ms")
+		@DisplayName("Caso de prueba de rendimiento: generar alarma temperatura en menos de 200ms")
 		void testTiempoEnvioAlertasT() {
 			Float temp = (float) 40.5;
 			Float frec = (float)147;
@@ -181,7 +183,7 @@ class testAlmacenV {
 		}
 		
 		@Test
-		@DisplayName("Caso de prueba de rendimiento: generar alarma en menos de 200ms")
+		@DisplayName("Caso de prueba de rendimiento: generar alarma frecuencia en menos de 200ms")
 		void testTiempoEnvioAlertasF() {
 			Float temp = (float) 36.5;
 			Float frec = (float)47;

@@ -1,4 +1,4 @@
-package b4.noValidosAlmacen;
+package testAlmacen;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -52,7 +52,7 @@ class testAlmacenNV {
 		Float temp = (float) 36.2;
 		Float frec = (float)135.0;
 		Medida medida = new Medida(temp, frec, "12-03-2019");
-		Alarma respuesta = subsistema.generarAlarma(null, pacienteRegistrado);
+		Alarma respuesta = subsistema.generarAlarma(medida, pacienteRegistrado);
 		assertNull(respuesta);
 	}
 	
@@ -82,7 +82,7 @@ class testAlmacenNV {
 		Float temp = (float) 38.0;
 		Float frec = (float)145.0;
 		Medida medida = new Medida(temp, frec, "12-03-2019");
-		Alarma respuesta = subsistema.generarAlarma(medida, null);
+		Alarma respuesta = subsistema.generarAlarma(medida, pacienteRegistrado);
 		assertNull(respuesta);
 	}
 	
@@ -92,7 +92,7 @@ class testAlmacenNV {
 		Float temp = (float) 36.0;
 		Float frec = (float)145.0;
 		Medida medida = new Medida(temp, frec, "12-03-2019");
-		Alarma respuesta = subsistema.generarAlarma(medida, null);
+		Alarma respuesta = subsistema.generarAlarma(medida, pacienteRegistrado);
 		assertNull(respuesta);
 	}
 	
@@ -102,7 +102,7 @@ class testAlmacenNV {
 		Float temp = (float) 36.5;
 		Float frec = (float)50.0;
 		Medida medida = new Medida(temp, frec, "12-03-2019");
-		Alarma respuesta = subsistema.generarAlarma(medida, null);
+		Alarma respuesta = subsistema.generarAlarma(medida, pacienteRegistrado);
 		assertNull(respuesta);
 	}
 	
@@ -112,7 +112,7 @@ class testAlmacenNV {
 		Float temp = (float) 36.5;
 		Float frec = (float)132.5;
 		Medida medida = new Medida(temp, frec, "12-03-2019");
-		Alarma respuesta = subsistema.generarAlarma(medida, null);
+		Alarma respuesta = subsistema.generarAlarma(medida, pacienteRegistrado);
 		assertNull(respuesta);
 	}
 

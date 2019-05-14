@@ -1,4 +1,4 @@
-package b1_validosSensorizacion;
+package testSensorizacion;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;

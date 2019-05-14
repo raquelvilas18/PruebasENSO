@@ -1,4 +1,4 @@
-package b8_noValidosPacientes;
+package testPacientes;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -71,7 +71,7 @@ class testPacientesNV {
 	}
 	
 	@Test
-	@DisplayName("CP_00045: Actualizar paciente nulo")
+	@DisplayName("CP_00045: Eliminar paciente nulo")
 	void testEliminarPaciente_045() {
 		Boolean resultado = subsistema.eliminar(null);
 		assertFalse(resultado);

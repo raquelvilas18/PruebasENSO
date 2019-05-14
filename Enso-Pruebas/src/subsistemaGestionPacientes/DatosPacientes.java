@@ -1,6 +1,7 @@
 package subsistemaGestionPacientes;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -34,15 +35,44 @@ public class DatosPacientes implements Itf6_DatosPacientes {
         String path = miDir.getAbsolutePath().substring(0, miDir.getAbsolutePath().length() - 1);
         File directorio = new File(path + "\\ficheros\\"+ nss + "\\");
         directorio.mkdirs();
+        
+        //AÑADIDO EN PRUEBAS
+        
+        /*try {
+        	File archivo = new File(".\\ficheros\\"+ nss + "\\Estadistico.csv");
+			BufferedWriter bw = new BufferedWriter(new FileWriter(archivo));
+			bw.close();
+			archivo = new File(".\\ficheros\\"+ nss + "\\Alarmas.csv");
+			bw = new BufferedWriter(new FileWriter(archivo));
+			bw.close();
+			archivo = new File(".\\ficheros\\"+ nss + "\\datosSimulados.csv");
+			bw = new BufferedWriter(new FileWriter(archivo));
+			bw.close();
+			archivo = new File(".\\ficheros\\"+ nss + "\\Medidas.csv");
+			bw = new BufferedWriter(new FileWriter(archivo));
+			bw.close();
+			
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}*/
+
+        
         try {
 			fichero = new FileWriter(".\\ficheros\\"+ nss + "\\Estadistico.csv",true);
+			fichero.close();
 			fichero = new FileWriter(".\\ficheros\\"+ nss + "\\Alarmas.csv",true);
+			fichero.close();
 			fichero = new FileWriter(".\\ficheros\\"+ nss + "\\datosSimulados.csv",true);
+			fichero.close();
 			fichero = new FileWriter(".\\ficheros\\"+ nss + "\\Medidas.csv",true);
+			fichero.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
 	}
 	@Override
 	public boolean darAlta(Paciente paciente) {

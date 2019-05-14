@@ -1,4 +1,4 @@
-package b2_noValidosSensorizacion;
+package testSensorizacion;
 
 import static org.junit.jupiter.api.Assertions.*;
 

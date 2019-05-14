@@ -83,6 +83,7 @@ public class DatosAnalisis implements Itf2_DatosInstantaneos, Itf4_Estadisticas,
 				}
 			    
 	    	estadisticos.add(new Estadistico(datos,fields[0] + ";" + fields[1]));
+
 			}
 	    	br.close();
 		} catch (Exception e) {
@@ -93,7 +94,7 @@ public class DatosAnalisis implements Itf2_DatosInstantaneos, Itf4_Estadisticas,
 
 	@Override
 	public ArrayList<Estadistico> solicitarEstadisticos(Paciente paciente, String fechaInicio, String fechaFin) {
-		Paciente p = this.iDatosPacientes.consultarDatosPaciente(paciente.getnSeguridadSocial());
+		Paciente p = iDatosPacientes.consultarDatosPaciente(paciente.getnSeguridadSocial());
 		ArrayList<Estadistico> estadisticos = new ArrayList<>();
 
 		try {
@@ -108,6 +109,7 @@ public class DatosAnalisis implements Itf2_DatosInstantaneos, Itf4_Estadisticas,
 			}
 			
 			for (Estadistico e : p.getEstadisticos()) {
+				System.out.println("jeje");
 				c = transformarFecha(e.getFecha());
 				if (c.after(cInicio) && c.before(cFin))
 					estadisticos.add(e);

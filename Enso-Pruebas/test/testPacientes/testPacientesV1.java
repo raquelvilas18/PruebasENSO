@@ -1,6 +1,8 @@
-package b7_validosPacientes;
+package testPacientes;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.io.File;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +22,7 @@ class testPacientesV1 {
 	@BeforeEach
 	void inicio() {
 		subsistema = (Itf6_DatosPacientes)new DatosPacientes();
-		NSSvalido = "123456781221";
+		NSSvalido = "123456781229";
 	}
 	
 	@AfterEach

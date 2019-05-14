@@ -1,4 +1,4 @@
-package b7_validosPacientes;
+package testPacientes;
 
 import static org.junit.jupiter.api.Assertions.*;
 
