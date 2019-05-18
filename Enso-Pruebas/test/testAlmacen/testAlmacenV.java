@@ -2,8 +2,10 @@ package testAlmacen;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import org.junit.jupiter.api.AfterEach;
@@ -20,6 +22,7 @@ import elementos.Medida;
 import elementos.Paciente;
 import subsistemaAlmacenDatos.DatosMedidas;
 import subsistemaAlmacenDatos.Itf1_DatosSimulados;
+import subsistemaAlmacenDatos.Itf3_SeriesTemporales;
 import subsistemaAnalisis.DatosAnalisis;
 import subsistemaAnalisis.Itf2_DatosInstantaneos;
 import subsistemaGestionPacientes.DatosPacientes;
@@ -31,9 +34,12 @@ class testAlmacenV {
 	Paciente pacienteRegistrado;
 	String NSSvalido;
 	String URLvalida;
+	Itf3_SeriesTemporales almacen;
+	
 	@BeforeEach
 	void inicio() {
 		subsistema = (Itf2_DatosInstantaneos)new DatosAnalisis(new DatosPacientes());
+		almacen = (Itf3_SeriesTemporales) new DatosMedidas(new DatosPacientes());
 		NSSvalido = "281234567840";
 		URLvalida = "ficheros/"+NSSvalido+"/medidas.csv";
 		pacienteRegistrado = new Paciente(NSSvalido, "Santiago de chile5", "Juan Rodriguez Alvarez", "28-07-1998");
@@ -153,18 +159,18 @@ class testAlmacenV {
 	}
 	
 	
-	//ESTE ESTA MAL HECHO---> todo: rehacer
-	@Disabled
 	@Test
 	@DisplayName("CP_00018: Generar estadistico valido, con paciente registrado")
-	void testGenerarEstadistico_017() {
-		DatosSensores generador = new DatosSensores();
-		generador.simularDatosSensores(2, pacienteRegistrado.getnSeguridadSocial());
-		Estadistico respuesta = subsistema.generarEstadistico( pacienteRegistrado);
-		for(String dato :respuesta.getDatos().keySet()) {
-			System.out.println(dato +"----" + respuesta.getDatos().get(dato));
-		}
-		//assertNull(respuesta);
+	void testGenerarEstadistico_018() {
+		ArrayList<Medida> medidas = new ArrayList<>();
+		Date fechaActual = new Date();
+		String fecha = new SimpleDateFormat("dd-MM-yyyy;kk:mm:ss").format(fechaActual);
+		medidas.add(new Medida(36.4f, 85.0f, fecha));
+		pacienteRegistrado.setMedidas(medidas);
+		Estadistico respuesta = subsistema.generarEstadistico(pacienteRegistrado);
+		
+		// Si no es nulo, significa que hay medidas y que se ha instanciado un Estadistico
+		assertNotNull(respuesta);
 	}
 	
 	
@@ -173,7 +179,7 @@ class testAlmacenV {
 	@DisplayName("Pruebas de Rendimiento")
 	class Detiempo {
 		@Test
-		@DisplayName("Caso de prueba de rendimiento: generar alarma temperatura en menos de 200ms")
+		@DisplayName("Caso de prueba de rendimiento: generar alarma en menos de 200ms")
 		void testTiempoEnvioAlertasT() {
 			Float temp = (float) 40.5;
 			Float frec = (float)147;
@@ -183,7 +189,7 @@ class testAlmacenV {
 		}
 		
 		@Test
-		@DisplayName("Caso de prueba de rendimiento: generar alarma frecuencia en menos de 200ms")
+		@DisplayName("Caso de prueba de rendimiento: generar alarma en menos de 200ms")
 		void testTiempoEnvioAlertasF() {
 			Float temp = (float) 36.5;
 			Float frec = (float)47;
@@ -192,4 +198,20 @@ class testAlmacenV {
 			assertTimeout(Duration.ofMillis(200), ()->{subsistema.generarAlarma(medida, pacientePrueba);});
 		}
 	}
+	
+	@Test
+	@DisplayName("CP_00019: Solicitar medidas entre dos fechas")
+	void testSolicitarMedidasEntreDosFechas_019() {
+		String fechaInicio = "30-2-2019";
+		String fechaFin = "30-3-2019";
+		assertNotNull(almacen.solicitarMedidas(pacienteRegistrado, fechaInicio, fechaFin));
+	}
+	
+	@Test
+	@DisplayName("CP_00027: Solicitar medidas desde una fecha")
+	void testSolicitarMedidasDesdeUnaFecha_027() {
+		String fechaInicio = "30-2-2019";
+		assertNotNull(almacen.solicitarMedidas(pacienteRegistrado, fechaInicio));
+	}
+	
 }

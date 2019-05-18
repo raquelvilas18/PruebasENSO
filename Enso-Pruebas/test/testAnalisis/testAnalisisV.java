@@ -24,6 +24,7 @@ class testAnalisisV {
 	String NSSvalidoNoRegistrado = "281234567847";
 	String NSSvalidoRegistrado = "281234567840";
 	Paciente pacienteRegistrado;
+	Paciente pacienteRegistrado2;
 	Paciente pacienteNoRegistrado;
 
 	@BeforeEach
@@ -35,15 +36,18 @@ class testAnalisisV {
 				"28-07-1998");
 		pacienteRegistrado = new Paciente(NSSvalidoRegistrado, "Santiago de chile5", "Juan Rodriguez Alvarez",
 				"28-07-1998");
+		pacienteRegistrado2 = new Paciente("123456781221", "Ourense", "Miguel Martínez", "12-03-1994");
 
 		DatosPacientes subsistemaPacientes = new DatosPacientes();
 		subsistemaPacientes.darAlta(pacienteRegistrado);
+		subsistemaPacientes.darAlta(pacienteRegistrado2);
 	}
 
 	@AfterEach
 	void limpiar() {
 		DatosPacientes subsistemaPacientes = new DatosPacientes();
 		subsistemaPacientes.eliminar(pacienteRegistrado);
+		subsistemaPacientes.eliminar(pacienteRegistrado2);
 	}
 
 	@Test

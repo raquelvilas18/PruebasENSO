@@ -6,7 +6,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import org.junit.Rule;
@@ -24,10 +26,14 @@ import org.mockito.junit.MockitoRule;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import elementos.Estadistico;
+import elementos.Medida;
 import elementos.Paciente;
 import opera.Arit;
+import subsistemaAlmacenDatos.DatosMedidas;
 import subsistemaAlmacenDatos.ExcepcionDeFechas;
+import subsistemaAlmacenDatos.Itf3_SeriesTemporales;
 import subsistemaAnalisis.DatosAnalisis;
+import subsistemaAnalisis.Itf2_DatosInstantaneos;
 import subsistemaAnalisis.Itf4_Estadisticas;
 import subsistemaGestionPacientes.DatosPacientes;
 import subsistemaGestionPacientes.Itf6_DatosPacientes;
@@ -46,19 +52,27 @@ class testAnalisisCB {
 	DatosAnalisis subsistemaAnalisis;
 	DatosPacientes subPacientes;
 	Paciente pac;
+	Paciente pacienteRegistrado2;
+	Itf2_DatosInstantaneos subsistemaDatosInstantaneos;
+	Itf3_SeriesTemporales subsistema2;
 
 	@BeforeEach
 	void inicio() {
 		subPacientes = new DatosPacientes();
 		subsistema = (Itf4_Estadisticas) new DatosAnalisis(subPacientes);
-
-		pac = new Paciente("123456781220", "Ourense", "Miguel Martínez", "12-03-1994");
+		subsistema2 = new DatosMedidas(subPacientes);
+		pac = new Paciente("123456781220", "Ourense", "Miguel Martï¿½nez", "12-03-1994");
 		subPacientes.darAlta(pac);
+		subsistemaDatosInstantaneos = (Itf2_DatosInstantaneos)new DatosAnalisis(subPacientes);
+		pacienteRegistrado2 = new Paciente("123456781221","Ourense", "Miguel Martï¿½nez", "12-03-1994");
+		subPacientes.darAlta(pacienteRegistrado2);
 
 	}
 
 	@AfterEach
 	void restaurar() {
+		subPacientes.eliminar(pac);
+		subPacientes.eliminar(pacienteRegistrado2);
 		File miDir = new File(".");
 		String path = miDir.getAbsolutePath().substring(0, miDir.getAbsolutePath().length() - 1);
 		String url = "ficheros\\123456781220";
@@ -67,8 +81,8 @@ class testAnalisisCB {
 
 
 	@Test
-	@DisplayName("CP_00032: Solicitar estadistico ->comprobar camino 1-2-3-FIN que debería lanzar una excepción de fechas")
-	void testsolicitarEstadistico_001() {
+	@DisplayName("CP_00067: Solicitar estadistico ->comprobar camino 1-2-3-FIN que deberï¿½a lanzar una excepciï¿½n de fechas")
+	void testsolicitarEstadistico_067() {
 		String fechaInicio = "25-03-2019;15:15:15";
 		String fechaFin = "22-02-2019;15:15:15";
 
@@ -78,8 +92,8 @@ class testAnalisisCB {
 	}
 
 	@Test
-	@DisplayName("CB_2: comprobar camino 1-2-4-6-7-8-9-12-7-13-FIN generar un arrayList con un único estadístico")
-	void testsolicitarEstadistico_002() {
+	@DisplayName("CP_00066: comprobar camino 1-2-4-6-7-8-9-12-7-13-FIN generar un arrayList con un ï¿½nico estadï¿½stico")
+	void testsolicitarEstadistico_066() {
 
 		String fechaInicio = "22-02-2019;15:15:15";
 		String fechaFin = "22-03-2019;15:15:15";
@@ -91,7 +105,7 @@ class testAnalisisCB {
 			pw.write("01-03-2019;15:15:15;T;36.7;36.1;36.4;33;34;35;36\n");
 			pw.close();
 
-			// Generar estadístico esperado con los datos pasados:
+			// Generar estadï¿½stico esperado con los datos pasados:
 			HashMap<String, Float> datosT = new HashMap<>();
 			datosT.put("t_maximo", (float) 36.7);
 			datosT.put("t_minimo", (float) 36.1);
@@ -122,8 +136,8 @@ class testAnalisisCB {
 	}
 	
 	@Test
-	@DisplayName("CB_4: comprobar camino 1-2-4-5-6-7-8-9-10-11-12-7-13-FIN  generar un arrayList con un único estadístico")
-	void testsolicitarEstadistico_004() {
+	@DisplayName("CP_00070: comprobar camino 1-2-4-5-6-7-8-9-10-11-12-7-13-FIN  generar un arrayList con un ï¿½nico estadï¿½stico")
+	void testsolicitarEstadistico_070() {
 
 		String fechaInicio = "22-02-2019;15:15:15";
 		String fechaFin = "22-03-2019;15:15:15";
@@ -136,7 +150,7 @@ class testAnalisisCB {
 			pw.close();
 			fichero.close();
 
-			// Generar estadístico esperado con los datos pasados:
+			// Generar estadï¿½stico esperado con los datos pasados:
 			HashMap<String, Float> datosT = new HashMap<>();
 			datosT.put("t_maximo", (float) 36.7);
 			datosT.put("t_minimo", (float) 36.1);
@@ -166,8 +180,8 @@ class testAnalisisCB {
 	}
 
 	@Test
-	@DisplayName("CB_3: comprobar camino . 1-2-4-5-7-8-9-10-12-7-13-FIN generar un arrayList vacio (paciente con una sola medida asociada posterior al intervalo)")
-	void testsolicitarEstadistico_003() {
+	@DisplayName("CP_00069: comprobar camino . 1-2-4-5-7-8-9-10-12-7-13-FIN generar un arrayList vacio (paciente con una sola medida asociada posterior al intervalo)")
+	void testsolicitarEstadistico_069() {
 
 		String fechaInicio = "22-02-2019;15:15:15";
 		String fechaFin = "22-03-2019;15:15:15";
@@ -197,14 +211,14 @@ class testAnalisisCB {
 	}
 
 	@Test
-	@DisplayName("CB_5: comprobar camino 1-2-4-5-7-8-9-12-7-8-9-10-12-7-8-9-10-11-12-7-13-FIN  generar un arrayList con un único estadístico")
-	void testsolicitarEstadistico_005() {
+	@DisplayName("CP_00068: comprobar camino 1-2-4-5-7-8-9-12-7-8-9-10-12-7-8-9-10-11-12-7-13-FIN  generar un arrayList con un ï¿½nico estadï¿½stico")
+	void testsolicitarEstadistico_068() {
 
 		String fechaInicio = "22-02-2019;15:15:15";
 		String fechaFin = "22-03-2019;15:15:15";
 
 		ArrayList<Estadistico> estadisticosClient = new ArrayList<>();
-		// Generar estadístico esperado con los datos pasados:
+		// Generar estadï¿½stico esperado con los datos pasados:
 		HashMap<String, Float> datosT = new HashMap<>();
 		datosT.put("t_maximo", (float) 36.7);
 		datosT.put("t_minimo", (float) 36.1);
@@ -238,14 +252,14 @@ class testAnalisisCB {
 	}
 
 	@Test
-	@DisplayName("CB_6: comprobar camino 1-2-4-5-7-8-9-12-7-8-9-10-12-7-8-9-10-11-12-7-13-FIN  generar un arrayList con un único estadístico")
-	void testsolicitarEstadistico_006() {
+	@DisplayName("CP_00071: comprobar camino 1-2-4-5-7-8-9-12-7-8-9-10-12-7-8-9-10-11-12-7-13-FIN  generar un arrayList con un ï¿½nico estadï¿½stico")
+	void testsolicitarEstadistico_071() {
 
 		String fechaInicio = "22-02-2019;15:15:15";
 		String fechaFin = "22-03-2019;15:15:15";
 
 		ArrayList<Estadistico> estadisticosClient = new ArrayList<>();
-		// Generar estadístico esperado con los datos pasados:
+		// Generar estadï¿½stico esperado con los datos pasados:
 		HashMap<String, Float> datosT = new HashMap<>();
 		datosT.put("t_maximo", (float) 36.7);
 		datosT.put("t_minimo", (float) 36.1);
@@ -295,6 +309,86 @@ class testAnalisisCB {
 		}
 		borrar.delete();
 		borrar.deleteOnExit();
+	}
+	
+	@Test
+	@DisplayName("CP_00077: Generar estadÃ­stico por el camino 1-2-8-10-11-FIN, devuelve null")
+	void testGenerarEstadistico_077() {
+		pacienteRegistrado2.setMedidas(new ArrayList<>());
+		assertNull(subsistemaDatosInstantaneos.generarEstadistico(pacienteRegistrado2));
+	}
+	
+	@Test
+	@DisplayName("CP_00076: Generar estadÃ­stico por el camino 1-2-3-4-7-2-8-10-11-FIN, devuelve null")
+	void testGenerarEstadistico_076() {
+		ArrayList<Medida> medidas = new ArrayList<>();
+		
+		// Fechas anteriores a la actual: solo se utilizan las medidas tomadas en la hora actual
+		medidas.add(new Medida(36.2f, 80.0f, "30-2-2019;12:34:56"));
+		medidas.add(new Medida(36.4f, 85.0f, "30-2-2019;12:39:28"));
+		
+		pacienteRegistrado2.setMedidas(medidas);
+		assertNull(subsistemaDatosInstantaneos.generarEstadistico(pacienteRegistrado2));
+	}
+	
+	@Test
+	@DisplayName("CP_00079: Generar estadÃ­stico por el camino 1-2-3-4-5-7-2-8-10-11-FIN, devuelve null")
+	void testGenerarEstadistico_079() {
+		ArrayList<Medida> medidas = new ArrayList<>();
+		
+		// Fechas posteriores a la actual pero tambiÃ©n a la hora actual: solo se utilizan las medidas tomadas en la hora actual
+		medidas.add(new Medida(36.2f, 80.0f, "30-2-2029;12:34:56"));
+		medidas.add(new Medida(36.4f, 85.0f, "30-2-2029;12:39:28"));
+		
+		pacienteRegistrado2.setMedidas(medidas);
+		assertNull(subsistemaDatosInstantaneos.generarEstadistico(pacienteRegistrado2));
+	}
+	
+	@Test
+	@DisplayName("CP_00078: Generar estadÃ­stico por el camino 1-2-3-4-5-6-7-2-8-9-11-FIN, devuelve ArrayList")
+	void testGenerarEstadistico_078() {
+		ArrayList<Medida> medidas = new ArrayList<>();
+		
+		// Medidas situadas en la hora actual
+		Date fechaActual = new Date();
+		String fecha = new SimpleDateFormat("dd-MM-yyyy;kk:mm:ss").format(fechaActual);
+		medidas.add(new Medida(36.4f, 85.0f, fecha));
+		
+		pacienteRegistrado2.setMedidas(medidas);
+		assertNotNull(subsistemaDatosInstantaneos.generarEstadistico(pacienteRegistrado2));
+	}
+	
+	@Test
+	@DisplayName("CP_00073: comprobar camino 1-2-3-FIN que deberï¿½a devolver un array vacio, error en la fecha")
+	void testsolicitarMedidas_073() {
+		String fechaInicio="22-02-2019;";
+		Paciente pac = new Paciente("123456781221","Ourense", "Miguel Martï¿½nez", "12-03-1994");
+		subPacientes.darAlta(pac);
+		ArrayList<Medida> aux = subsistema2.solicitarMedidas(pac, fechaInicio);
+		assertTrue(aux.isEmpty());
+		subPacientes.eliminar(pac);
+	}
+	
+	@Test
+	@DisplayName("CP_00072: comprobar camino 1-2-4-5-7-8-10-11-13-14-FIN que deberï¿½a devolver un array vacio, no hay medidas")
+	void testsolicitarMedidas_072() {
+		String fechaInicio="22-02-2019;11:11";
+		Paciente pac = new Paciente("123456781221","Ourense", "Miguel Martï¿½nez", "12-03-1994");
+		subPacientes.darAlta(pac);
+		ArrayList<Medida> aux = subsistema2.solicitarMedidas(pac, fechaInicio);
+		assertTrue(aux.isEmpty());
+		subPacientes.eliminar(pac);
+	}
+	
+	@Test
+	@DisplayName("CP_00075: comprobar camino 1-2-4-5-7-8-10-11-12-FIN que deberï¿½a devolver un array vacio, fecha posterior a la actual")
+	void testsolicitarMedidas_075() {
+		String fechaInicio="22-02-2029;11:11";
+		Paciente pac = new Paciente("123456781221","Ourense", "Miguel Martï¿½nez", "12-03-1994");
+		subPacientes.darAlta(pac);
+		ArrayList<Medida> aux = subsistema2.solicitarMedidas(pac, fechaInicio);
+		assertTrue(aux.isEmpty());
+		subPacientes.eliminar(pac);
 	}
 
 }

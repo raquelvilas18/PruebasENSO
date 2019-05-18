@@ -46,21 +46,17 @@ class testAnalisisNV {
 	}
 
 	@Test
-	@DisplayName("CP_00032: Solicitar estadistico ->comprobar camino 1-2-3-FIN que debería lanzar una excepción de fechas")
-	void testsolicitarEstadistico_001() {
-		String fechaInicio="22-03-2019;15:15:15";
-		String fechaFin = "22-02-2019;15:15:15";
-		Paciente pac = new Paciente("123456781221","Ourense", "Miguel Martínez", "12-03-1994");
-		DatosPacientes subsistemaPacientes = new DatosPacientes();
-		subsistemaPacientes.darAlta(pac);
-		assertThrows(ExcepcionDeFechas.class,()->{subsistema.solicitarEstadisticos(pac, fechaInicio, fechaFin); });
-		
-		subsistemaPacientes.eliminar(pac);
-	
+	@DisplayName("CP_00032: Solicitar estadï¿½stico")
+	void solicitarEstadistico_32() {
+		ArrayList<Estadistico> respuesta = null;
+		String fechaInicio = "30-2-2019";
+		String fechaFin = "30-3-2019";
+		respuesta = subsistema.solicitarEstadisticos(pacienteNoRegistrado, fechaInicio, fechaFin);
+		assertNull(respuesta);
 	}
 
 	@Test
-	@DisplayName("CP_00033: Solicitar estadístico")
+	@DisplayName("CP_00033: Solicitar estadï¿½stico")
 	void solicitarEstadistico_33() {
 		ArrayList<Estadistico> respuesta = null;
 		String fechaInicio = "30-2-2019";
@@ -70,7 +66,7 @@ class testAnalisisNV {
 	}
 
 	@Test
-	@DisplayName("CP_00034: Solicitar estadístico")
+	@DisplayName("CP_00034: Solicitar estadï¿½stico")
 	void solicitarEstadistico_34() {
 		ArrayList<Estadistico> respuesta = null;
 		String fechaInicio = "22-2-2019";
@@ -84,6 +80,26 @@ class testAnalisisNV {
 	void verAlarmas_36() {
 		ArrayList<Alarma> respuesta = null;
 		respuesta = subsistema2.verAlarmas(pacienteNoRegistrado);
+		assertNull(respuesta);
+	}
+	
+	@Test
+	@DisplayName("CP_00064: Solicitar Estadistico")
+	void solicitarEstadistico_64() {
+		ArrayList<Estadistico> respuesta = null;
+		String fechaInicio = "30-2-2019;15:15:15";
+		String fechaFin = "23-15-2019;15:75:99";
+		respuesta = subsistema.solicitarEstadisticos(pacienteRegistrado, fechaInicio, fechaFin);
+		assertNull(respuesta);
+	}
+	
+	@Test
+	@DisplayName("CP_00065: Solicitar Estadistico")
+	void solicitarEstadistico_65() {
+		ArrayList<Estadistico> respuesta = null;
+		String fechaInicio = "30-2-2019;15:15:15";
+		String fechaFin = "23-15-2019;15-75-99";
+		respuesta = subsistema.solicitarEstadisticos(pacienteRegistrado, fechaInicio, fechaFin);
 		assertNull(respuesta);
 	}
 
