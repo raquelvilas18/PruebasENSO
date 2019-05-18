@@ -8,6 +8,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import elementos.Alarma;
 import elementos.Estadistico;
@@ -195,11 +198,10 @@ class testAlmacenNV {
 		assertNull(almacen.solicitarMedidas(null, fechaInicio));
 	}
 	
-	@Test
-	@DisplayName("CP_00029: Solicitar medidas desde una fecha con fecha inválida")
-	void testSolicitarMedidasDesdeUnaFecha_029() {
-		String fechaInicio = "12-12-678";
-		assertNull(almacen.solicitarMedidas(pacienteRegistrado, fechaInicio));
+	@ParameterizedTest
+	@ValueSource(strings = { "12-12-678", "34-03-2019" })
+	void testSolicitarMedidasDesdeUnaFecha_029(String fecha) {
+		assertNull(almacen.solicitarMedidas(pacienteRegistrado, fecha));
 	}
 	
 	@Test
