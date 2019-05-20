@@ -89,7 +89,7 @@ class testAlmacenNV {
 		Float temp = (float) 38.0;
 		Float frec = (float)145.0;
 		Medida medida = new Medida(temp, frec, "12-03-2019");
-		Alarma respuesta = subsistema.generarAlarma(medida, null);
+		Alarma respuesta = subsistema.generarAlarma(medida, pacienteRegistrado);
 		assertNull(respuesta);
 	}
 	
@@ -99,7 +99,7 @@ class testAlmacenNV {
 		Float temp = (float) 36.0;
 		Float frec = (float)145.0;
 		Medida medida = new Medida(temp, frec, "12-03-2019");
-		Alarma respuesta = subsistema.generarAlarma(medida, null);
+		Alarma respuesta = subsistema.generarAlarma(medida, pacienteRegistrado);
 		assertNull(respuesta);
 	}
 	
@@ -109,7 +109,7 @@ class testAlmacenNV {
 		Float temp = (float) 36.5;
 		Float frec = (float)50.0;
 		Medida medida = new Medida(temp, frec, "12-03-2019");
-		Alarma respuesta = subsistema.generarAlarma(medida, null);
+		Alarma respuesta = subsistema.generarAlarma(medida, pacienteRegistrado);
 		assertNull(respuesta);
 	}
 	
@@ -119,8 +119,112 @@ class testAlmacenNV {
 		Float temp = (float) 36.5;
 		Float frec = (float)132.5;
 		Medida medida = new Medida(temp, frec, "12-03-2019");
-		Alarma respuesta = subsistema.generarAlarma(medida, null);
+		Alarma respuesta = subsistema.generarAlarma(medida, pacienteRegistrado);
 		assertNull(respuesta);
+	}
+	
+	@Test
+	@DisplayName("CP_00081: Generar alarma con datos normales,frecuencia 220 y temperatura 40.5")
+	void testgenerarAlarma_081() {
+		Float temp = (float) 40.5;
+		Float frec = (float)220.0;
+		Medida medida = new Medida(temp, frec, "12-03-2019");
+		Alarma respuesta = subsistema.generarAlarma(medida, pacienteRegistrado);
+		assertTrue(respuesta.getTipo().equals("F"), "La alarma no es de tipo frecuencia");
+		assertTrue(respuesta.getTipo().equals("T"), "La alarma no es de tipo temperatura");
+		assertTrue(respuesta.getValor()==220.0, "La frecuencia no es la esperada");
+		assertTrue(respuesta.getValor()==40.5, "La temperatura no es la esperada");
+		assertTrue(respuesta.getFecha().equals("12-03-2019"), "La fecha no es la esperada");
+	}
+	
+	@Test
+	@DisplayName("CP_00082: Generar alarma con datos normales,frecuencia 47 y temperatura 40.5")
+	void testgenerarAlarma_082() {
+		Float temp = (float) 40.5;
+		Float frec = (float)47.0;
+		Medida medida = new Medida(temp, frec, "12-03-2019");
+		Alarma respuesta = subsistema.generarAlarma(medida, pacienteRegistrado);
+		assertTrue(respuesta.getTipo().equals("F"), "La alarma no es de tipo frecuencia");
+		assertTrue(respuesta.getTipo().equals("T"), "La alarma no es de tipo temperatura");
+		assertTrue(respuesta.getValor()==47.0, "La frecuencia no es la esperada");
+		assertTrue(respuesta.getValor()==40.5, "La temperatura no es la esperada");
+		assertTrue(respuesta.getFecha().equals("12-03-2019"), "La fecha no es la esperada");
+	}
+	
+	@Test
+	@DisplayName("CP_00083: Generar alarma con datos normales,frecuencia 35.5 y temperatura 220")
+	void testgenerarAlarma_083() {
+		Float temp = (float) 35.5;
+		Float frec = (float)220.0;
+		Medida medida = new Medida(temp, frec, "12-03-2019");
+		Alarma respuesta = subsistema.generarAlarma(medida, pacienteRegistrado);
+		assertTrue(respuesta.getTipo().equals("F"), "La alarma no es de tipo frecuencia");
+		assertTrue(respuesta.getTipo().equals("T"), "La alarma no es de tipo temperatura");
+		assertTrue(respuesta.getValor()==220.0, "La frecuencia no es la esperada");
+		assertTrue(respuesta.getValor()==35.5, "La temperatura no es la esperada");
+		assertTrue(respuesta.getFecha().equals("12-03-2019"), "La fecha no es la esperada");
+	}
+	
+	@Test
+	@DisplayName("CP_00084: Generar alarma con datos normales,frecuencia 47 y temperatura 35.5")
+	void testgenerarAlarma_084() {
+		Float temp = (float) 35.5;
+		Float frec = (float)47.0;
+		Medida medida = new Medida(temp, frec, "12-03-2019");
+		Alarma respuesta = subsistema.generarAlarma(medida, pacienteRegistrado);
+		assertTrue(respuesta.getTipo().equals("F"), "La alarma no es de tipo frecuencia");//Cambiar esto a una respuesta correcta que deberian ser dos alarmas
+		assertTrue(respuesta.getTipo().equals("T"), "La alarma no es de tipo temperatura");
+		assertTrue(respuesta.getValor()==47.0, "La frecuencia no es la esperada");
+		assertTrue(respuesta.getValor()==35.5, "La temperatura no es la esperada");
+		assertTrue(respuesta.getFecha().equals("12-03-2019"), "La fecha no es la esperada");
+	}
+	
+	@Test
+	@DisplayName("CP_00087: Generar alarma con datos normales,frecuencia 60 y temperatura 40.5")
+	void testgenerarAlarma_087() {
+		Float temp = (float) 40.5;
+		Float frec = (float)60.0;
+		Medida medida = new Medida(temp, frec, "12-03-2019");
+		Alarma respuesta = subsistema.generarAlarma(medida, pacienteRegistrado);
+		assertTrue(respuesta.getTipo().equals("T"), "La alarma no es de tipo temperatura");
+		assertTrue(respuesta.getValor()==40.5, "La temperatura no es la esperada");
+		assertTrue(respuesta.getFecha().equals("12-03-2019"), "La fecha no es la esperada");
+	}
+	
+	@Test
+	@DisplayName("CP_00088: Generar alarma con datos normales,frecuencia 49 y temperatura 36.5")
+	void testgenerarAlarma_088() {
+		Float temp = (float) 36.5;
+		Float frec = (float)49.0;
+		Medida medida = new Medida(temp, frec, "12-03-2019");
+		Alarma respuesta = subsistema.generarAlarma(medida, pacienteRegistrado);
+		assertTrue(respuesta.getTipo().equals("F"), "La alarma no es de tipo frecuencia");
+		assertTrue(respuesta.getValor()==49.0, "La frecuencia no es la esperada");
+		assertTrue(respuesta.getFecha().equals("12-03-2019"), "La fecha no es la esperada");
+	}
+	
+	@Test
+	@DisplayName("CP_00089: Generar alarma con datos normales,frecuencia 60 y temperatura 35.0")
+	void testgenerarAlarma_089() {
+		Float temp = (float) 35.0;
+		Float frec = (float)60.0;
+		Medida medida = new Medida(temp, frec, "12-03-2019");
+		Alarma respuesta = subsistema.generarAlarma(medida, pacienteRegistrado);
+		assertTrue(respuesta.getTipo().equals("T"), "La alarma no es de tipo temperatura");
+		assertTrue(respuesta.getValor()==35.0, "La temperatura no es la esperada");
+		assertTrue(respuesta.getFecha().equals("12-03-2019"), "La fecha no es la esperada");
+	}
+	
+	@Test
+	@DisplayName("CP_00090: Generar alarma con datos normales,frecuencia 220 y temperatura 36.5")
+	void testgenerarAlarma_090() {
+		Float temp = (float) 36.5;
+		Float frec = (float)220.0;
+		Medida medida = new Medida(temp, frec, "12-03-2019");
+		Alarma respuesta = subsistema.generarAlarma(medida, pacienteRegistrado);
+		assertTrue(respuesta.getTipo().equals("F"), "La alarma no es de tipo frecuencia");
+		assertTrue(respuesta.getValor()==220.0, "La frecuencia no es la esperada");
+		assertTrue(respuesta.getFecha().equals("12-03-2019"), "La fecha no es la esperada");
 	}
 
 	@Test
