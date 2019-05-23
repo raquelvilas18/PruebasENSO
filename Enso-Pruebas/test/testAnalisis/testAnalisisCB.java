@@ -312,53 +312,6 @@ class testAnalisisCB {
 	}
 	
 	@Test
-	@DisplayName("CP_00077: Generar estadístico por el camino 1-2-8-10-11-FIN, devuelve null")
-	void testGenerarEstadistico_077() {
-		pacienteRegistrado2.setMedidas(new ArrayList<>());
-		assertNull(subsistemaDatosInstantaneos.generarEstadistico(pacienteRegistrado2));
-	}
-	
-	@Test
-	@DisplayName("CP_00076: Generar estadístico por el camino 1-2-3-4-7-2-8-10-11-FIN, devuelve null")
-	void testGenerarEstadistico_076() {
-		ArrayList<Medida> medidas = new ArrayList<>();
-		
-		// Fechas anteriores a la actual: solo se utilizan las medidas tomadas en la hora actual
-		medidas.add(new Medida(36.2f, 80.0f, "30-2-2019;12:34:56"));
-		medidas.add(new Medida(36.4f, 85.0f, "30-2-2019;12:39:28"));
-		
-		pacienteRegistrado2.setMedidas(medidas);
-		assertNull(subsistemaDatosInstantaneos.generarEstadistico(pacienteRegistrado2));
-	}
-	
-	@Test
-	@DisplayName("CP_00079: Generar estadístico por el camino 1-2-3-4-5-7-2-8-10-11-FIN, devuelve null")
-	void testGenerarEstadistico_079() {
-		ArrayList<Medida> medidas = new ArrayList<>();
-		
-		// Fechas posteriores a la actual pero también a la hora actual: solo se utilizan las medidas tomadas en la hora actual
-		medidas.add(new Medida(36.2f, 80.0f, "30-2-2029;12:34:56"));
-		medidas.add(new Medida(36.4f, 85.0f, "30-2-2029;12:39:28"));
-		
-		pacienteRegistrado2.setMedidas(medidas);
-		assertNull(subsistemaDatosInstantaneos.generarEstadistico(pacienteRegistrado2));
-	}
-	
-	@Test
-	@DisplayName("CP_00078: Generar estadístico por el camino 1-2-3-4-5-6-7-2-8-9-11-FIN, devuelve ArrayList")
-	void testGenerarEstadistico_078() {
-		ArrayList<Medida> medidas = new ArrayList<>();
-		
-		// Medidas situadas en la hora actual
-		Date fechaActual = new Date();
-		String fecha = new SimpleDateFormat("dd-MM-yyyy;kk:mm:ss").format(fechaActual);
-		medidas.add(new Medida(36.4f, 85.0f, fecha));
-		
-		pacienteRegistrado2.setMedidas(medidas);
-		assertNotNull(subsistemaDatosInstantaneos.generarEstadistico(pacienteRegistrado2));
-	}
-	
-	@Test
 	@DisplayName("CP_00073: comprobar camino 1-2-3-FIN que deber�a devolver un array vacio, error en la fecha")
 	void testsolicitarMedidas_073() {
 		String fechaInicio="22-02-2019;";
