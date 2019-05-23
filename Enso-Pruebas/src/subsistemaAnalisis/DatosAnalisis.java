@@ -32,6 +32,7 @@ public class DatosAnalisis implements Itf2_DatosInstantaneos, Itf4_Estadisticas,
 	@Override
 	public ArrayList<Alarma> verAlarmas(Paciente p) {
 		Paciente paciente = this.iDatosPacientes.consultarDatosPaciente(p.getnSeguridadSocial());
+		if (paciente == null) return null;
 		if (paciente.getAlarmas().isEmpty() || paciente.getAlarmas() == null) {
 			paciente.setAlarmas(this.leerDatosFicheroAlarmas(paciente));
 		}
@@ -101,7 +102,7 @@ public class DatosAnalisis implements Itf2_DatosInstantaneos, Itf4_Estadisticas,
 			Calendar cInicio, cFin, c;
 			cInicio = transformarFecha(fechaInicio);
 			cFin = transformarFecha(fechaFin);
-
+			if (cInicio == null || cFin == null) return null;
 			if (cInicio.after(cFin))
 				throw new ExcepcionDeFechas("Fecha de fin anterior a la fecha de inicio");
 			if(p.getEstadisticos().isEmpty() || p.getEstadisticos() == null) {
@@ -182,6 +183,8 @@ public class DatosAnalisis implements Itf2_DatosInstantaneos, Itf4_Estadisticas,
 
 	@Override
 	public Estadistico generarEstadistico(Paciente paciente) {
+		if (paciente == null) return null;
+		
 		HashMap<String, Float> datosT = new HashMap<>();
 		HashMap<String, Float> datosF = new HashMap<>();
 		String url = "ficheros\\" + paciente.getnSeguridadSocial();
@@ -346,8 +349,10 @@ public class DatosAnalisis implements Itf2_DatosInstantaneos, Itf4_Estadisticas,
 		Calendar calendario = Calendar.getInstance();
 		try {
 			String[] arrayFecha = fecha.split(";");
+			if (arrayFecha.length != 2) return null;
 			String[] arrayDia = arrayFecha[0].split("-");
 			String[] arrayHora = arrayFecha[1].split(":");
+			if (arrayDia.length != 3 || arrayHora.length != 3) return null;
 			calendario.set(Integer.parseInt(arrayDia[2]), Integer.parseInt(arrayDia[1]), Integer.parseInt(arrayDia[0]),
 					Integer.parseInt(arrayHora[0]), Integer.parseInt(arrayHora[1]), Integer.parseInt(arrayHora[2]));
 		} catch (NumberFormatException e) {

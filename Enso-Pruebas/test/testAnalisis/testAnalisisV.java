@@ -29,18 +29,16 @@ class testAnalisisV {
 
 	@BeforeEach
 	void inicio() {
-		subsistema = new DatosAnalisis(new DatosPacientes());
-		subsistema2 = new DatosAnalisis(new DatosPacientes());
-
+		DatosPacientes subsistemaPacientes = new DatosPacientes();
 		pacienteNoRegistrado = new Paciente(NSSvalidoNoRegistrado, "Santiago de chile5", "Juan Rodriguez Alvarez",
 				"28-07-1998");
 		pacienteRegistrado = new Paciente(NSSvalidoRegistrado, "Santiago de chile5", "Juan Rodriguez Alvarez",
 				"28-07-1998");
 		pacienteRegistrado2 = new Paciente("123456781221", "Ourense", "Miguel Martínez", "12-03-1994");
-
-		DatosPacientes subsistemaPacientes = new DatosPacientes();
 		subsistemaPacientes.darAlta(pacienteRegistrado);
 		subsistemaPacientes.darAlta(pacienteRegistrado2);
+		subsistema = new DatosAnalisis(subsistemaPacientes);
+		subsistema2 = new DatosAnalisis(subsistemaPacientes);	
 	}
 
 	@AfterEach
@@ -54,8 +52,8 @@ class testAnalisisV {
 	@DisplayName("CP_00031: Solicitar estadístico")
 	void testSolicitarEstadistico_031() {
 		ArrayList<Estadistico> respuesta = null;
-		String fechaInicio = "30-2-2019";
-		String fechaFin = "30-3-2019";
+		String fechaInicio = "30-2-2019;16:00:00";
+		String fechaFin = "30-3-2019;17:00:00";
 		respuesta = subsistema.solicitarEstadisticos(pacienteRegistrado, fechaInicio, fechaFin);
 		assertNotNull(respuesta);
 	}
